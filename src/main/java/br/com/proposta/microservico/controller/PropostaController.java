@@ -20,13 +20,14 @@ public class PropostaController {
     @Autowired
     private PropostaRepository propostaRepository;
 
+
     @PostMapping(value = "/proposta")
     @Transactional
     public ResponseEntity<PropostaResponse> criaProposta(@RequestBody @Valid PropostaRequest propostaRequest,
                                                          UriComponentsBuilder urlBuilder){
         Proposta novaProposta = propostaRequest.convertToEntity();
         propostaRepository.save(novaProposta);
-        URI urlAceso = urlBuilder.path("/proposta/{id}").build(novaProposta.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(new PropostaResponse(novaProposta, urlAceso));
+        URI urlAcesso = urlBuilder.path("/proposta/{id}").build(novaProposta.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PropostaResponse(novaProposta, urlAcesso));
     }
 }

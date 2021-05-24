@@ -14,7 +14,7 @@ public class PropostaResponse {
     private URI url;
 
     public PropostaResponse(Proposta proposta, URI uri) {
-        this.cpfOuCnpj = proposta.getCpfOuCnpj();
+        this.cpfOuCnpj = proposta.getDocumento();
         this.email = proposta.getEmail();
         this.nome = proposta.getNome();
         this.endereco = proposta.getEndereco();

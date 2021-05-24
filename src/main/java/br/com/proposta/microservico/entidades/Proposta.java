@@ -11,15 +11,15 @@ public class Proposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cpfOuCnpj;
+    private String documento;
     private String email;
     private String nome;
     private String endereco;
     private Double salario;
 
-    public Proposta(String cpfOuCnpj, String email,
+    public Proposta(String documento, String email,
                     String nome, String endereco, Double salario) {
-        this.cpfOuCnpj = cpfOuCnpj;
+        this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
@@ -29,15 +29,15 @@ public class Proposta {
     @Override
     public String toString() {
 
-        return this.nome + " " + this.cpfOuCnpj;
+        return this.nome + " " + this.documento;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getCpfOuCnpj() {
-        return cpfOuCnpj;
+    public String getDocumento() {
+        return documento;
     }
 
     public String getEmail() {

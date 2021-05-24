@@ -1,5 +1,6 @@
 package br.com.proposta.microservico.request;
 
+import br.com.proposta.microservico.anotacoes.AtributoUnico;
 import br.com.proposta.microservico.entidades.Proposta;
 import com.sun.istack.NotNull;
 
@@ -10,21 +11,28 @@ import javax.validation.constraints.Size;
 
 public class PropostaRequest {
 
-    @NotNull @NotBlank @Size(min = 11, max = 14)
-    private String cpfOuCnpj;
-    @NotNull @NotBlank
+    @NotNull
+    @NotBlank
+    @Size(min = 11, max = 14)
+    @AtributoUnico(fieldName = "documento", domainClass = Proposta.class)
+    private String documento;
+    @NotNull
+    @NotBlank
     @Email
     private String email;
-    @NotNull @NotBlank
+    @NotNull
+    @NotBlank
     private String nome;
-    @NotNull @NotBlank
+    @NotNull
+    @NotBlank
     private String endereco;
-    @NotNull @Positive
+    @NotNull
+    @Positive
     private Double salario;
 
-    public PropostaRequest(@NotBlank String cpfOuCnpj, @NotBlank @Email String email, @NotBlank String nome,
+    public PropostaRequest(@NotBlank String documento, @NotBlank @Email String email, @NotBlank String nome,
                            @NotBlank String endereco, @NotBlank @Positive Double salario) {
-        this.cpfOuCnpj = cpfOuCnpj;
+        this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
@@ -32,7 +40,7 @@ public class PropostaRequest {
     }
 
     public Proposta convertToEntity() {
-            return new Proposta(this.cpfOuCnpj,
-                    this.nome, this.email, this.endereco, this.salario)  ;
+        return new Proposta(this.documento,
+                this.nome, this.email, this.endereco, this.salario);
     }
 }
