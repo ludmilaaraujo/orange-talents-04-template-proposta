@@ -12,14 +12,16 @@ public class PropostaResponse {
     private String endereco;
     private Double salario;
     private URI url;
+    private ElegibilidadeProposta elegibilidadeProposta;
 
-    public PropostaResponse(Proposta proposta, URI uri) {
+    public PropostaResponse(Proposta proposta, URI url, ElegibilidadeProposta elegibilidadeProposta) {
         this.cpfOuCnpj = proposta.getDocumento();
         this.email = proposta.getEmail();
         this.nome = proposta.getNome();
         this.endereco = proposta.getEndereco();
         this.salario = proposta.getSalario();
-        this.url = uri;
+        this.url = url;
+        this.elegibilidadeProposta = elegibilidadeProposta;
     }
 
     public String getCpfOuCnpj() {
@@ -44,5 +46,9 @@ public class PropostaResponse {
 
     public URI getUrl() {
         return url;
+    }
+
+    public ElegibilidadeProposta getElegibilidadeProposta() {
+        return elegibilidadeProposta;
     }
 }
