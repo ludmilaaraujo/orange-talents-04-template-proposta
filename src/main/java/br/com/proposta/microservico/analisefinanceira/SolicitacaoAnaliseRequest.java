@@ -1,4 +1,4 @@
-package br.com.proposta.microservico.client;
+package br.com.proposta.microservico.analisefinanceira;
 
 import br.com.proposta.microservico.entidades.Proposta;
 
@@ -8,9 +8,9 @@ public class SolicitacaoAnaliseRequest {
     private String idProposta;
 
     public SolicitacaoAnaliseRequest(Proposta proposta) {
-        this.documento = documento;
-        this.nome = nome;
-        this.idProposta = idProposta;
+        this.documento = proposta.getDocumento();
+        this.nome = proposta.getNome();
+        this.idProposta = proposta.getId().toString();
     }
 
     public String getDocumento() {

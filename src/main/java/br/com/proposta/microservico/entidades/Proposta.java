@@ -1,9 +1,6 @@
 package br.com.proposta.microservico.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Proposta {
@@ -16,20 +13,17 @@ public class Proposta {
     private String nome;
     private String endereco;
     private Double salario;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Cartao cartao;
 
-    public Proposta(String documento, String email,
-                    String nome, String endereco, Double salario) {
+    public Proposta(String documento, String email, String nome,
+                    String endereco, Double salario, Cartao cartao) {
         this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
-    }
-
-    @Override
-    public String toString() {
-
-        return this.nome + " " + this.documento;
+        this.cartao = cartao;
     }
 
     public Long getId() {
@@ -55,4 +49,13 @@ public class Proposta {
     public Double getSalario() {
         return salario;
     }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
+    }
+
 }

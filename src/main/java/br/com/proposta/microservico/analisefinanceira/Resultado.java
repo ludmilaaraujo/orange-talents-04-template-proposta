@@ -1,4 +1,4 @@
-package br.com.proposta.microservico.client;
+package br.com.proposta.microservico.analisefinanceira;
 
 public enum Resultado {
     COM_RETRICAO,

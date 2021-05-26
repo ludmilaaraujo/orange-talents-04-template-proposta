@@ -1,6 +1,7 @@
 package br.com.proposta.microservico.request;
 
 import br.com.proposta.microservico.anotacoes.AtributoUnico;
+import br.com.proposta.microservico.entidades.Cartao;
 import br.com.proposta.microservico.entidades.Proposta;
 import com.sun.istack.NotNull;
 
@@ -40,7 +41,8 @@ public class PropostaRequest {
     }
 
     public Proposta convertToEntity() {
-        return new Proposta(this.documento,
-                this.nome, this.email, this.endereco, this.salario);
+        return new Proposta(this.documento, this.email,
+                this.nome, this.endereco, this.salario,
+                null);
     }
 }

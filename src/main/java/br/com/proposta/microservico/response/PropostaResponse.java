@@ -13,6 +13,7 @@ public class PropostaResponse {
     private Double salario;
     private URI url;
     private ElegibilidadeProposta elegibilidadeProposta;
+    private String idCartao;
 
     public PropostaResponse(Proposta proposta, URI url, ElegibilidadeProposta elegibilidadeProposta) {
         this.cpfOuCnpj = proposta.getDocumento();
@@ -22,6 +23,7 @@ public class PropostaResponse {
         this.salario = proposta.getSalario();
         this.url = url;
         this.elegibilidadeProposta = elegibilidadeProposta;
+        this.idCartao = proposta.getCartao().getIdCartao();
     }
 
     public String getCpfOuCnpj() {
@@ -46,6 +48,10 @@ public class PropostaResponse {
 
     public URI getUrl() {
         return url;
+    }
+
+    public String getIdCartao() {
+        return idCartao;
     }
 
     public ElegibilidadeProposta getElegibilidadeProposta() {
