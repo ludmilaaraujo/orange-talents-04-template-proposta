@@ -15,14 +15,14 @@ public class PropostaResponse {
     private ElegibilidadeProposta elegibilidadeProposta;
     private String idCartao;
 
-    public PropostaResponse(Proposta proposta, URI url, ElegibilidadeProposta elegibilidadeProposta) {
+    public PropostaResponse(Proposta proposta, URI url) {
         this.cpfOuCnpj = proposta.getDocumento();
         this.email = proposta.getEmail();
         this.nome = proposta.getNome();
         this.endereco = proposta.getEndereco();
         this.salario = proposta.getSalario();
         this.url = url;
-        this.elegibilidadeProposta = elegibilidadeProposta;
+        this.elegibilidadeProposta = proposta.getElegibilidadeProposta();
         this.idCartao = proposta.getCartao().getIdCartao();
     }
 

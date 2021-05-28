@@ -1,5 +1,7 @@
 package br.com.proposta.microservico.entidades;
 
+import br.com.proposta.microservico.response.ElegibilidadeProposta;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,15 +17,22 @@ public class Proposta {
     private Double salario;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Cartao cartao;
+    private ElegibilidadeProposta elegibilidadeProposta;
 
-    public Proposta(String documento, String email, String nome,
-                    String endereco, Double salario, Cartao cartao) {
+    public Proposta(String documento, String email, String nome, String endereco,
+                    Double salario, Cartao cartao, ElegibilidadeProposta elegibilidadeProposta) {
+        this.id = id;
         this.documento = documento;
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
         this.cartao = cartao;
+        this.elegibilidadeProposta = elegibilidadeProposta;
+    }
+
+    public Proposta(){
+
     }
 
     public Long getId() {
@@ -58,4 +67,11 @@ public class Proposta {
         this.cartao = cartao;
     }
 
+    public ElegibilidadeProposta getElegibilidadeProposta() {
+        return elegibilidadeProposta;
+    }
+
+    public void setElegibilidadeProposta(ElegibilidadeProposta elegibilidadeProposta) {
+        this.elegibilidadeProposta = elegibilidadeProposta;
+    }
 }

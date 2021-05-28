@@ -40,10 +40,15 @@ public class AnaliseClienteComponente {
         try {
             resultadoDaAnalise = analiseClientFeign.consultaAnalise(solicitacaoAnaliseRequest);
             if(resultadoDaAnalise.getResultadoSolicitacao().equals(COM_RETRICAO)){
-                return new PropostaResponse(proposta, url, NAO_ELEGIVEL);
+                proposta.setElegibilidadeProposta(NAO_ELEGIVEL);
+                propostaRepository.save(proposta);
+                return new PropostaResponse(proposta, url);
+
             } else {
+                proposta.setElegibilidadeProposta(ELEGIVEL);
+                propostaRepository.save(proposta);
                 emiteCartao(proposta);
-                return new PropostaResponse(proposta, url, ELEGIVEL);
+                return new PropostaResponse(proposta, url);
             }
         } catch (Exception e){
             System.out.println("Erro ao tentar comunicar com a API de Analise");

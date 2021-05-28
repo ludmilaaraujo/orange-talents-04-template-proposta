@@ -28,6 +28,10 @@ public class Cartao {
         this.diaVencimento = diaVencimento;
     }
 
+    public Cartao(){
+
+    }
+
     public Long getId() {
         return id;
     }

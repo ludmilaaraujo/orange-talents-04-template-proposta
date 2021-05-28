@@ -43,6 +43,6 @@ public class PropostaRequest {
     public Proposta convertToEntity() {
         return new Proposta(this.documento, this.email,
                 this.nome, this.endereco, this.salario,
-                null);
+                null, null);
     }
 }
