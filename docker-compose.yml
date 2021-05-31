@@ -3,6 +3,8 @@ services:
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
+    networks:
+      - spring-boot-mysql-network
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -12,6 +14,8 @@ services:
     image: "confluentinc/cp-kafka:5.2.1"
     ports:
       - 9092:9092
+    networks:
+      - spring-boot-mysql-network
     depends_on:
       - zookeeper
     environment:
@@ -26,6 +30,8 @@ services:
     image: 'postgres:alpine'
     volumes:
       - postgres-volume:/var/lib/postgresql/data
+    networks:
+      - spring-boot-mysql-network
     ports:
       - 5432:5432
     environment:
@@ -40,6 +46,8 @@ services:
       - 18443:8443
       - 18080:8080
       - 19990:9990
+    networks:
+      - spring-boot-mysql-network
     depends_on:
       # Just a delay to wait for postgres! This is not recommended!
       - grafana
@@ -66,6 +74,8 @@ services:
     image: 'zupacademy/analise-financeira'
     ports:
       - 9999:9999
+    networks:
+      - spring-boot-mysql-network
     environment:
       SERVER_PORT: 9999
       LOG_LEVEL: INFO
@@ -76,6 +86,8 @@ services:
     image: 'zupacademy/contas'
     ports:
       - 8888:8888
+    networks:
+      - spring-boot-mysql-network
     environment:
       SERVER_PORT: 8888
       LOG_LEVEL: INFO
@@ -85,6 +97,8 @@ services:
     image: 'zupacademy/transacoes'
     ports:
       - 7777:7777
+    networks:
+      - spring-boot-mysql-network
     depends_on:
       - kafka
     environment:
@@ -95,6 +109,8 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one
+    networks:
+      - spring-boot-mysql-network
     ports:
       - 5775:5775/udp
       - 6831:6831/udp
@@ -111,7 +127,8 @@ services:
     image: prom/prometheus
     volumes:
       - prometheus-volume:/etc/prometheus/
-    network_mode: bridge
+    networks:
+      - spring-boot-mysql-network
     ports:
       - "9090:9090"
 
@@ -119,7 +136,8 @@ services:
     image: grafana/grafana
     volumes:
       - grafana-volume:/var/lib/grafana
-    network_mode: bridge
+    networks:
+      - spring-boot-mysql-network
     ports:
       - "3000:3000"
     depends_on:
@@ -127,6 +145,8 @@ services:
 
   vault:
     image: vault:1.5.3
+    networks:
+      - spring-boot-mysql-network
     ports:
       - 8200:8200
     environment:
@@ -134,32 +154,51 @@ services:
       VAULT_TOKEN: ee413645-dbe8-4848-afc6-6bb2768ada75
       VAULT_ADDR: http://127.0.0.1:8200
 
-#  db:
-#    image: mysql
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=6996Ludmila
-#      - MYSQL_DATABASE=proposta
-#      - MYSQL_USER=ludmila
-#      - MYSQL_PASSWORD=6996Ludmila
-#    expose:
-#      - 3306
-#    container_name: db
-#    network_mode: bridge
-#    healthcheck:
-#      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-#      timeout: 10s
-#      retries: 10
-#  app:
-#    build:
-#      dockerfile: ./docker/proposta.dockerfile
-#      context: .
-#    network_mode: bridge
-#    ports:
-#      - "8080:8080"
-#    container_name: app
-#    depends_on:
-#      mysqldb:
-#        condition: service_healthy
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=6996Ludmila
+      - MYSQL_DATABASE=propostamicroservico
+      - MYSQL_USER=proposta
+      - MYSQL_PASSWORD=6996Ludmila
+    ports:
+      - "3309:3306"
+    container_name: db
+    networks:
+      - spring-boot-mysql-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+  app:
+    build:
+      dockerfile: ./docker/proposta.dockerfile
+      context: .
+    networks:
+      - spring-boot-mysql-network
+    ports:
+      - "8081:8080"
+    container_name: app
+    depends_on:
+      analise :
+       condition : service_started
+      transacoes :
+       condition : service_started
+      contas :
+       condition : service_started
+      db :
+       condition: service_healthy
+    environment:
+      - HOST_DB=db
+      - USER_DB=proposta
+      - USER_SENHA_DB=6996Ludmila
+      - DATA_BASE_NAME=propostamicroservico
+      - PORTA_DB=3306
+      - ANALISE_URL=http://analise:9999
+      - CARTOES_URL=http://contas:8888
+networks:
+  spring-boot-mysql-network:
+    driver: bridge
 volumes:
   grafana-volume:
   prometheus-volume:

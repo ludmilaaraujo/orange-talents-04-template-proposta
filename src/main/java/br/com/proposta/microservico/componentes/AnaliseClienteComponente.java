@@ -10,17 +10,22 @@ import br.com.proposta.microservico.entidades.Cartao;
 import br.com.proposta.microservico.entidades.Proposta;
 import br.com.proposta.microservico.repository.PropostaRepository;
 import br.com.proposta.microservico.response.PropostaResponse;
+import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.logging.Logger;
 
 import static br.com.proposta.microservico.analisefinanceira.Resultado.COM_RETRICAO;
 import static br.com.proposta.microservico.response.ElegibilidadeProposta.ELEGIVEL;
 import static br.com.proposta.microservico.response.ElegibilidadeProposta.NAO_ELEGIVEL;
 
 @Component
+@Slf4j
 public class AnaliseClienteComponente {
 
     @Autowired
@@ -32,28 +37,27 @@ public class AnaliseClienteComponente {
     @Autowired
     private PropostaRepository propostaRepository;
 
-    public PropostaResponse analisaProposta(Proposta proposta, UriComponentsBuilder builder) {
+    public PropostaResponse analisaProposta(Proposta proposta, UriComponentsBuilder builder) throws Exception {
+        log.info("Preparando envio da requisicao da analise");
         ResultadoDaAnalise resultadoDaAnalise = null;
         URI url = builder.path("/proposta/{id}").build(proposta.getId());
         SolicitacaoAnaliseRequest solicitacaoAnaliseRequest = new SolicitacaoAnaliseRequest
                 (proposta);
-        try {
-            resultadoDaAnalise = analiseClientFeign.consultaAnalise(solicitacaoAnaliseRequest);
-            if(resultadoDaAnalise.getResultadoSolicitacao().equals(COM_RETRICAO)){
-                proposta.setElegibilidadeProposta(NAO_ELEGIVEL);
-                propostaRepository.save(proposta);
-                return new PropostaResponse(proposta, url);
+        log.info("Dados do Envio idProposta: " + solicitacaoAnaliseRequest.getIdProposta());
+        log.info("Dados do Envio documento: " + solicitacaoAnaliseRequest.getDocumento());
+        log.info("Dados do Envio nome: " + solicitacaoAnaliseRequest.getNome());
+        resultadoDaAnalise = analiseClientFeign.consultaAnalise(solicitacaoAnaliseRequest);
+        if(resultadoDaAnalise.getResultadoSolicitacao().equals(COM_RETRICAO)){
+            proposta.setElegibilidadeProposta(NAO_ELEGIVEL);
+            propostaRepository.save(proposta);
+            return new PropostaResponse(proposta, url);
 
-            } else {
-                proposta.setElegibilidadeProposta(ELEGIVEL);
-                propostaRepository.save(proposta);
-                emiteCartao(proposta);
-                return new PropostaResponse(proposta, url);
-            }
-        } catch (Exception e){
-            System.out.println("Erro ao tentar comunicar com a API de Analise");
+        } else {
+            proposta.setElegibilidadeProposta(ELEGIVEL);
+            propostaRepository.save(proposta);
+            emiteCartao(proposta);
+            return new PropostaResponse(proposta, url);
         }
-        return null;
 
     }
 
@@ -67,8 +71,8 @@ public class AnaliseClienteComponente {
             cartao = new Cartao(cartaoResponse.getId(), cartaoResponse.getEmitidoEm(),
                     cartaoResponse.getTitular(), cartaoResponse.getVencimento().getId(),
                     cartaoResponse.getVencimento().getDia());
-        } catch (Exception e){
-            System.out.println("Erro ao tentar comunicar com a API de Cartão");
+        }  catch (FeignException e){
+            log.error("Erro ao tentar comunicar com a API de Cartão", e.getCause());
         }
         proposta.setCartao(cartao);
         propostaRepository.saveAndFlush(proposta);

@@ -30,7 +30,7 @@ public class PropostaController {
     @PostMapping(value = "/proposta")
     @Transactional(rollbackOn = Exception.class)
     public ResponseEntity<PropostaResponse> criaProposta(@RequestBody @Valid PropostaRequest propostaRequest,
-                                                         UriComponentsBuilder urlBuilder){
+                                                         UriComponentsBuilder urlBuilder) throws Exception {
         Proposta propostaCadastrada = propostaRequest.convertToEntity();
         propostaRepository.save(propostaCadastrada);
         PropostaResponse propostaResponse =
