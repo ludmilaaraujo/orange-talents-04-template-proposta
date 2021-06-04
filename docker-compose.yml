@@ -196,6 +196,8 @@ services:
       - PORTA_DB=3306
       - ANALISE_URL=http://analise:9999
       - CARTOES_URL=http://contas:8888
+      - KEYCLOAK_ISSUER_URI=http://keycloak:18080/auth/realms/proposta
+      - KEYCLOAK_JWKS_URI=http://keycloak:18080/auth/realms/proposta/protocol/openid-connect/certs
 networks:
   spring-boot-mysql-network:
     driver: bridge
