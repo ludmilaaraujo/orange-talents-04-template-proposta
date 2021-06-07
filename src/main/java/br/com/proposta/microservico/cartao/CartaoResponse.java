@@ -7,7 +7,7 @@ public class CartaoResponse {
     private String id;
     private LocalDateTime emitidoEm;
     private String titular;
-    private List<Bloqueio> bloqueios;
+    private List<BloqueioResponse> bloqueios;
     private List<Avisos> avisos;
     private List<Carteiras> carteiras;
     private List<Parcelas> parcelas;
@@ -16,7 +16,7 @@ public class CartaoResponse {
     private Vencimento vencimento;
     private String idProposta;
 
-    public CartaoResponse(String id, LocalDateTime emitidoEm, String titular, List<Bloqueio> bloqueios,
+    public CartaoResponse(String id, LocalDateTime emitidoEm, String titular, List<BloqueioResponse> bloqueios,
                           List<Avisos> avisos, List<Carteiras> carteiras, List<Parcelas> parcelas, Double limite,
                           Renegociacao renegociacao, Vencimento vencimento, String idProposta) {
         this.id = id;
@@ -44,7 +44,7 @@ public class CartaoResponse {
         return titular;
     }
 
-    public List<Bloqueio> getBloqueios() {
+    public List<BloqueioResponse> getBloqueios() {
         return bloqueios;
     }
 

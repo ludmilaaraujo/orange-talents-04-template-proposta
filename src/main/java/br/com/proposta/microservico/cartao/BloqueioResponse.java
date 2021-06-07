@@ -2,14 +2,14 @@ package br.com.proposta.microservico.cartao;
 
 import java.time.LocalDateTime;
 
-public class Bloqueio {
+public class BloqueioResponse {
     private String id;
     private LocalDateTime bloqueadoEm;
     private String sistemaResponsavel;
     private Boolean ativo;
 
-    public Bloqueio(String id, LocalDateTime bloqueadoEm,
-                    String sistemaResponsavel, Boolean ativo) {
+    public BloqueioResponse(String id, LocalDateTime bloqueadoEm,
+                            String sistemaResponsavel, Boolean ativo) {
         this.id = id;
         this.bloqueadoEm = bloqueadoEm;
         this.sistemaResponsavel = sistemaResponsavel;

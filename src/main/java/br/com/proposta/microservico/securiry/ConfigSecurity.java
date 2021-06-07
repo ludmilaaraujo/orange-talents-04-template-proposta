@@ -20,7 +20,6 @@ public class ConfigSecurity  extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/proposta/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.GET, "/proposta/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.GET, "/usuarioLogado/**").hasAuthority("SCOPE_proposta")
-
         ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
 

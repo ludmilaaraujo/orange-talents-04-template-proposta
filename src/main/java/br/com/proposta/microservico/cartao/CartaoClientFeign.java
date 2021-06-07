@@ -3,9 +3,7 @@ package br.com.proposta.microservico.cartao;
 import br.com.proposta.microservico.analisefinanceira.ResultadoDaAnalise;
 import br.com.proposta.microservico.analisefinanceira.SolicitacaoAnaliseRequest;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name="cartao", url="${cartoes.host}")
 public interface CartaoClientFeign {
@@ -15,4 +13,8 @@ public interface CartaoClientFeign {
 
     @PostMapping("/api/cartoes")
     CartaoResponse cadastraCartao(CartaoRequest cartaoRequest);
+
+    @PostMapping("/api/cartoes/{idCartao}/bloqueios")
+    ResultadoBloqueio bloqueiaCartao(@PathVariable(name = "idCartao") String idCartao,
+                                     @RequestBody BloqueioRequest bloqueioRequest);
 }
