@@ -1,5 +1,8 @@
 package br.com.proposta.microservico.cartao;
 
+import br.com.proposta.microservico.entidades.AvisoViagem;
+import br.com.proposta.microservico.repository.CartaoRepository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -16,11 +16,14 @@ public class ConfigSecurity  extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests(authorizeRequests -> authorizeRequests
                 .mvcMatchers("**/actuator/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/avisoViagem/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.POST, "/biometria/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.POST, "/proposta/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.GET, "/proposta/**").hasAuthority("SCOPE_proposta")
                 .mvcMatchers(HttpMethod.GET, "/usuarioLogado/**").hasAuthority("SCOPE_proposta")
         ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+
+
 
 
 
