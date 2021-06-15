@@ -2,6 +2,9 @@ package br.com.proposta.microservico.cartao;
 
 import br.com.proposta.microservico.analisefinanceira.ResultadoDaAnalise;
 import br.com.proposta.microservico.analisefinanceira.SolicitacaoAnaliseRequest;
+import br.com.proposta.microservico.cartao.viagem.ResultadoAvisoViagem;
+import br.com.proposta.microservico.cartao.viagem.SolicitacaoAvisoViagem;
+import br.com.proposta.microservico.entidades.AvisoViagem;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,4 +20,9 @@ public interface CartaoClientFeign {
     @PostMapping("/api/cartoes/{idCartao}/bloqueios")
     ResultadoBloqueio bloqueiaCartao(@PathVariable(name = "idCartao") String idCartao,
                                      @RequestBody BloqueioRequest bloqueioRequest);
+
+    @PostMapping("/api/cartoes/{idCartao}/avisos")
+    ResultadoAvisoViagem avisoViagem(@PathVariable(name = "idCartao") String idCartao,
+                                     @RequestBody SolicitacaoAvisoViagem solicitacaoAvisoViagem);
+
 }

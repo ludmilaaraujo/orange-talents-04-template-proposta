@@ -12,15 +12,16 @@ public class AvisoViagemRequest {
 
     @NotBlank @NotNull
     private String destinoViagem;
-    @NotBlank @NotNull @Future
+    @NotNull @Future
     private Date dataInicioViagem;
-    @NotBlank @NotNull @Future
+    @NotNull @Future
     private Date dataTerminoViagem;
     @NotBlank @NotNull
     private String userAgent;
 
     public AvisoViagemRequest(@NotBlank @NotNull String destinoViagem,
-                              @NotBlank @NotNull @Future Date dataInicioViagem, @NotBlank @NotNull @Future Date dataTerminoViagem,
+                              @NotNull @Future Date dataInicioViagem,
+                              @NotNull @Future Date dataTerminoViagem,
                               @NotBlank @NotNull String userAgent) {
         this.destinoViagem = destinoViagem;
         this.dataInicioViagem = dataInicioViagem;
