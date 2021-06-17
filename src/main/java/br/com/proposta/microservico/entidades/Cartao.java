@@ -1,5 +1,8 @@
 package br.com.proposta.microservico.entidades;
 
+import br.com.proposta.microservico.cartao.carteira.Carteira;
+import br.com.proposta.microservico.cartao.carteira.CarteiraRequest;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +16,12 @@ public class Cartao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String idCartao;
+    private String idCarteira;
     private LocalDateTime emitidoEm;
     private String titular;
     private String idVencimento;
     private Integer diaVencimento;
+    private Carteira carteiraAssociada;
 
     public Cartao(String idCartao, LocalDateTime emitidoEm,
                   String titular, String idVencimento, Integer diaVencimento) {
@@ -30,6 +35,22 @@ public class Cartao {
 
     public Cartao(){
 
+    }
+
+    public Carteira getCarteiraAssociada() {
+        return carteiraAssociada;
+    }
+
+    public void setCarteiraAssociada(Carteira carteiraAssociada) {
+        this.carteiraAssociada = carteiraAssociada;
+    }
+
+    public String getIdCarteira() {
+        return idCarteira;
+    }
+
+    public void setIdCarteira(String idCarteira) {
+        this.idCarteira = idCarteira;
     }
 
     public Long getId() {

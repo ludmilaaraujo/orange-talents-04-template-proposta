@@ -1,10 +1,15 @@
-package br.com.proposta.microservico.cartao.viagem;
+package br.com.proposta.microservico.cartao.carteira;
 
-public class ResultadoAvisoViagem {
+public class ResultadoCarteira {
     private String resultado;
     private String id;
 
-    public ResultadoAvisoViagem(String resultado, String id) {
+    @Deprecated
+    public ResultadoCarteira(){
+
+    }
+
+    public ResultadoCarteira(String resultado, String id) {
         this.resultado = resultado;
         this.id = id;
     }

@@ -3,7 +3,9 @@ package br.com.proposta.microservico.response;
 import br.com.proposta.microservico.entidades.Proposta;
 
 import java.net.URI;
-
+// TODO Proposta Response  1) coloque o id da carteira se existir vinculo e qual carteira é exemplo :
+//                          idCarteira String
+//                          carteira Carteira
 public class PropostaResponse {
 
     private String cpfOuCnpj;

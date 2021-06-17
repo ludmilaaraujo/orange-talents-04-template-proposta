@@ -1,10 +1,9 @@
 package br.com.proposta.microservico.cartao;
 
-import br.com.proposta.microservico.analisefinanceira.ResultadoDaAnalise;
-import br.com.proposta.microservico.analisefinanceira.SolicitacaoAnaliseRequest;
+import br.com.proposta.microservico.cartao.carteira.ResultadoCarteira;
+import br.com.proposta.microservico.cartao.carteira.SolicitacaoInclusaoCarteira;
 import br.com.proposta.microservico.cartao.viagem.ResultadoAvisoViagem;
 import br.com.proposta.microservico.cartao.viagem.SolicitacaoAvisoViagem;
-import br.com.proposta.microservico.entidades.AvisoViagem;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,4 +24,7 @@ public interface CartaoClientFeign {
     ResultadoAvisoViagem avisoViagem(@PathVariable(name = "idCartao") String idCartao,
                                      @RequestBody SolicitacaoAvisoViagem solicitacaoAvisoViagem);
 
+    @PostMapping("/api/cartoes/{idCartao}/carteiras")
+    ResultadoCarteira associaCarteira(@PathVariable(name = "idCartao") String idCartao,
+                             @RequestBody SolicitacaoInclusaoCarteira solicitacaoInclusaoCarteira);
 }
