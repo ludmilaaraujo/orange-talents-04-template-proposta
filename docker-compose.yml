@@ -127,10 +127,13 @@ services:
     image: prom/prometheus
     volumes:
       - prometheus-volume:/etc/prometheus/
+      - "./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml"
     networks:
       - spring-boot-mysql-network
     ports:
       - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
 
   grafana:
     image: grafana/grafana
@@ -196,9 +199,9 @@ services:
       - PORTA_DB=3306
       - ANALISE_URL=http://analise:9999
       - CARTOES_URL=http://contas:8888
-      - KEYCLOAK_ISSUER_URI=http://keycloak:18080/auth/realms/proposta
-      - KEYCLOAK_JWKS_URI=http://keycloak:18080/auth/realms/proposta/protocol/openid-connect/certs
-      - JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/auth/realms/proposta
+      - KEYCLOAK_JWKS_URI=http://keycloak:8080/auth/realms/proposta/protocol/openid-connect/certs
+      - JAEGER_ENDPOINT=http://jaeger:14268/api/traces
 networks:
   spring-boot-mysql-network:
     driver: bridge
