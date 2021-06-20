@@ -1,6 +1,7 @@
 package br.com.proposta.microservico.proposta.entidades;
 
 import br.com.proposta.microservico.cartao.entidades.Cartao;
+import br.com.proposta.microservico.common.anotacoes.Passcode;
 import br.com.proposta.microservico.proposta.responses.ElegibilidadeProposta;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ public class Proposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Convert(converter = Passcode.class)
     private String documento;
     private String email;
     private String nome;

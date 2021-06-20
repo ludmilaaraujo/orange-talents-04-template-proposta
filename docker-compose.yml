@@ -202,6 +202,7 @@ services:
       - KEYCLOAK_ISSUER_URI=http://keycloak:8080/auth/realms/proposta
       - KEYCLOAK_JWKS_URI=http://keycloak:8080/auth/realms/proposta/protocol/openid-connect/certs
       - JAEGER_ENDPOINT=http://jaeger:14268/api/traces
+      - PASSCODE_APP=mk5679646sda645da6D5
 networks:
   spring-boot-mysql-network:
     driver: bridge
